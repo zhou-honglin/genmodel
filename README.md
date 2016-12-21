@@ -25,7 +25,7 @@ genmodel -h 可得到下面使用说明
 	
 ###注意事项
 * prefix 和 suffix会应用到 name指定的className 以及 嵌套的 className
-* 自定义模板传入一个目录，命令规则为 :假设目录名XXXModel 则XXXModel 里的.h和.m文件的文件名为 XXXModelH.tpl 和 XXXModel.m,模板语法参照 [artTemplate](https://github.com/aui/artTemplate/wiki/syntax:simple)
+* 自定义模板传入一个目录，命令规则为 :假设目录名XXXModel 则XXXModel 里的.h和.m文件的文件名为 XXXModelH.tpl 和 XXXModelM.tpl,模板语法参照 [artTemplate](https://github.com/aui/artTemplate/wiki/syntax:simple)
 * -k(--key)的含义为root class 所对应的键，例如:
 ```
 {
