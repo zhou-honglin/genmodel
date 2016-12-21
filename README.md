@@ -1,3 +1,7 @@
+# genmodel
+genmodel 可以使用命令根据json文件生成object-c的model,避免重复的劳动
+## 安装
+	npm install genmodel -g
 ## 如何使用
 genmodel -h 可得到下面使用说明
 	`Usage: genmodel [options]

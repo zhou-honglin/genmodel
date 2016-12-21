@@ -1,8 +1,15 @@
 {
   "name": "genmodel",
   "version": "0.0.1",
-  "description":"generate object-c model with a template",
-  "keywords":["generator","model"],
+  "description": "generate object-c model with a template",
+  "keywords": [
+    "generator",
+    "model"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhou-honglin/genmodel.git"
+  },
   "author": "honglin.zhou",
   "license": "MIT",
   "bin": {
