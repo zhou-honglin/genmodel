@@ -141,7 +141,12 @@ try {
     process.exit(1);
 }
 if (modelKey) {
-    obj = obj[modelKey];
+    let keyArr = modelKey.replace(/^\./, '').split('.');
+    let _obj = obj;
+    for (let i = 0; i < (keyArr.length); i++) {
+        _obj = _obj[keyArr[i]];
+    }
+    obj = _obj;
 }
 if (!(_typeof(obj) == 'object')) {
     console.error('error:json object root object not a Dictionary');

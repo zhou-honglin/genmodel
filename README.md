@@ -30,20 +30,37 @@ genmodel -h 可得到下面使用说明
 ###注意事项
 * prefix 和 suffix会应用到 name指定的className 以及 嵌套的 className
 * 自定义模板传入一个目录，命令规则为 :假设目录名XXXModel 则XXXModel 里的.h和.m文件的文件名为 XXXModelH.tpl 和 XXXModelM.tpl,模板语法参照 [artTemplate](https://github.com/aui/artTemplate/wiki/syntax:simple)
-* -k(--key)的含义为root class 所对应的键，例如:
+* -k(--key)的含义为指定 根对象 所对应的键路径，例如:
 ```
 {
     "orderId": 104,
     "totalPrice": 103.45,
-    "productA": {
+    "products": [
+        {
+            "id": 123,
+            "name": "Product #1",
+            "price": 12.95,
+            "productIn": {
+                "idInArr": 123,
+                "name": "Product name",
+                "price": 12.95
+            }
+        }
+    ],
+    "productOut": {
         "id": 123,
         "name": "Product name",
-        "price": 12.95
+        "price": 12.95,
+		"productIn": {
+                "idIn": 123,
+                "name": "Product name",
+                "price": 12.95
+            }
     }
 }
 ```
-指定 -k productA -n product 则只会生成product类
-* -m(--class_map)是嵌套对象类命名映射，规则为`.productA=product,.userB=user`以"."开头 从根对象开始(如有-key，则为-key指定的根对象)，以逗号分隔，中间不要留空格 如以上json 执行 `genmodel -n order  -i xxx.json -m '.productA=product' `则生成order类和product类
+指定 `-k '.products.0.productIn' -n product` 则只会以productIn的json生成product类,--key 可以嵌套，以"."开头，以文件json的根对象开始遍历，数组只能指定索引为 0
+* -m(--class_map)是嵌套对象类命名映射，规则为`.productOut=product,.userB=user`以"."开头，可以嵌套路径，从根对象开始(如有-key，则为-key指定的根对象)，以逗号分隔，中间不要留空格 如以上json 执行 `genmodel -n order  -i xxx.json -m '.productOut=product' `则生成order类,product类
 * -i -k 指定的json文件的根对象需为一个Dictionary
 
 
