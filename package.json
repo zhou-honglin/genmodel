@@ -1,0 +1,15 @@
+{
+  "name": "genmodel",
+  "version": "0.0.1",
+  "description":"generate model with a template",
+  "keywords":["generator","model"],
+  "author": "honglin.zhou",
+  "license": "MIT",
+  "bin": {
+    "genmodel": "genmodel.js"
+  },
+  "dependencies": {
+    "art-template": "^3.0.3",
+    "yargs": "^6.5.0"
+  }
+}
