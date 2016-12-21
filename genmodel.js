@@ -39,6 +39,11 @@ var argv = require('yargs')
         demand: false,
         describe: 'the map className for the nest object or array; use -m ".products=product",also apply prefix or suffix',
         type: 'string'
+    }).option('t', {
+        alias: 'template',
+        demand: false,
+        describe: 'the template for modelClass,use "iPadModel" or "YYModel" or custom template path,default "iPadModel"',
+        type: 'string'
     }).usage('Usage: genmodel [options]')
     .example('genmodel -n User -p JD -s Model -i xxx.json -o ~/Desktop', 'generate JDUserModel with the xxx.json to Desktop')
     .help('h')
@@ -172,7 +177,7 @@ if (mapString) {
     });
 }
 
-template.config('base', __dirname);
+// template.config('base', __dirname);
 template.config('extname', '.tpl');
 
 template.helper('_modelName', function (name) {
@@ -182,6 +187,7 @@ template.helper('_modelName', function (name) {
 function genModel(name, obj) {
     var properties = [];
     var classNames = [];
+    var existsArray = false;
     for (let key of Object.keys(obj)) {
         var value = obj[key];
         var tmpArr = key.split('__map__');
@@ -200,6 +206,7 @@ function genModel(name, obj) {
             classNames.push(property.className);
             genModel(property.className, value);
         } else if (_typeof(value) == 'array') {
+            existsArray = true;
             property.className = _modelName(mapKey);
             classNames.push(property.className);
             genModel(property.className, value[0]);
@@ -212,10 +219,19 @@ function genModel(name, obj) {
         'properties': properties,
         'classNames': classNames,
         'date': today.toLocaleDateString(),
-        'year': today.getFullYear()
+        'year': today.getFullYear(),
+        'existsArray':existsArray
     };
-    var hContent = template('tpl/iPadModelH', data).replace(/^\s*[\r\n]/gm, "");
-    var mContent = template('tpl/iPadModelM', data).replace(/^\s*[\r\n]/gm, "");
+
+    var vtemplate = argv.template?argv.template:'iPadModel';
+    var templatePath;
+    if(["iPadModel","YYModel"].indexOf(vtemplate) != -1){
+        templatePath = __dirname + `/tpl/${vtemplate}/${vtemplate}`;
+    }else{
+        templatePath = vtemplate;
+    }
+    var hContent = template(templatePath + 'H', data).replace(/^\s*[\r\n]/gm, "");
+    var mContent = template(templatePath + 'M', data).replace(/^\s*[\r\n]/gm, "");
     var hFile = realOutPath + '/' + name + '.h';
     var mFile = realOutPath + '/' + name + '.m';
     fs.writeFileSync(hFile, hContent, { 'flag': 'w+' });

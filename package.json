@@ -1,7 +1,7 @@
 {
   "name": "genmodel",
   "version": "0.0.1",
-  "description":"generate model with a template",
+  "description":"generate object-c model with a template",
   "keywords":["generator","model"],
   "author": "honglin.zhou",
   "license": "MIT",
