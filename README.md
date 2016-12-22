@@ -14,7 +14,7 @@ genmodel -h 可得到下面使用说明
 	                                                             [string] [required]
 	  -p, --class_prefix  the model className of prefix                     [string]
 	  -s, --class_suffix  the model className of suffix                     [string]
-	  -k, --key           the key for json object to generate model         [string]
+	  -k, --key           the key path for json object to generate model         [string]
 	  -m, --class_map     the map className for the nest object or array; use -m
 	                      ".products=product",also apply prefix or suffix   [string]
 	  -t, --template      the template for modelClass,use "iPadModel" or "YYModel"
@@ -22,8 +22,8 @@ genmodel -h 可得到下面使用说明
 	  -h, --help          Show help                                        [boolean]
 	
 	Examples:
-	  genmodel -n User -p JD -s Model -i xxx.json -o ~/Desktop 
-	  generate JDUserModel with the xxx.json to Desktop
+	  genmodel -n User -p XX -s Model -i xxx.json -o ~/Desktop 
+	  generate XXUserModel with the xxx.json to Desktop
 	
 	copyright 2016`
 	
