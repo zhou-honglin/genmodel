@@ -16,7 +16,7 @@ var argv = require('yargs')
         type: 'string'
     }).option('n', {
         alias: 'name',
-        demand: true,
+        demand: false,
         describe: 'the name of the root model,will apply prefix or suffix for root model and all nest models if exists',
         type: 'string'
     }).option('p', {
@@ -55,7 +55,11 @@ function validString(str) {
     return str ? str : "";
 }
 var fistLetterUpper = function (str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    if(str){
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }else{
+        return "";
+    }
 };
 function _modelName(name) {
     return modelPrefix + fistLetterUpper(name) + modelfSuffix;
@@ -78,7 +82,11 @@ function getTypeStr(key, value) {
         case 'object':
             return name;
         case 'array':
+        if(value.length > 0 && _typeof(value[0])=="object"){
             return `NSArray<${name}>*`;
+        }else{
+            return 'NSArray*'
+        }
         case 'null':
             return 'NSObject*';
         default:
@@ -211,10 +219,12 @@ function genModel(name, obj) {
             classNames.push(property.className);
             genModel(property.className, value);
         } else if (_typeof(value) == 'array') {
-            existsArray = true;
-            property.className = _modelName(mapKey);
-            classNames.push(property.className);
-            genModel(property.className, value[0]);
+            if(value.length > 0 && _typeof(value[0])=="object"){
+                existsArray = true;
+                property.className = _modelName(mapKey);
+                classNames.push(property.className);
+                genModel(property.className, value[0]);
+            }
         }
 
         properties.push(property);

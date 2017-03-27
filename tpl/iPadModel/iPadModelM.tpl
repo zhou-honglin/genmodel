@@ -28,7 +28,7 @@
             if(validateDictionary(dic[@"{{value.key}}"])){
                 self.{{value.key}} = [[{{value.className}} alloc] initWithDic:dic[@"{{value.key}}"]];
              }
-            {{else if value.jstype == 'array'}}
+            {{else if value.jstype == 'array' && value.className}}
             NSArray *{{value.key}}Dics = toValidateArray(dic[@"{{value.key}}"]);
             NSMutableArray<{{value.className}}*> *{{value.key}}Objs = [NSMutableArray array];
             for(NSDictionary *dic in {{value.key}}Dics){
@@ -38,6 +38,8 @@
                 }
             }
             self.{{value.key}} = {{value.key}}Objs;
+            {{else if value.jstype == 'array'}}
+            self.{{value.key}} = toValidateArray(dic[@"{{value.key}}"]);
             {{/if}}
             {{/each}}
         }
